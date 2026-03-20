@@ -10,11 +10,13 @@ from dotenv import load_dotenv
 # Lädt die Variablen aus der .env Datei
 load_dotenv()
 
+
 def get_default_url():
     ip = os.getenv("FRITZ_IP")
     if ip:
         return f"http://{ip}"
     return "http://192.168.178.1"
+
 
 # Configure logger
 logging.basicConfig(
@@ -23,6 +25,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S"
 )
 logger = logging.getLogger("fritzbox_user_reader")
+
 
 @click.command()
 @click.option(
@@ -68,6 +71,7 @@ def main(url):
             logger.error(f"Failed to parse fallback data object: {e}")
     else:
         logger.error("No usernames found. Please check the HTML manually.")
+
 
 if __name__ == "__main__":
     main()

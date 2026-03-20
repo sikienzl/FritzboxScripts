@@ -25,10 +25,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger("fritzbox_call_forwarding")
 
+
 def check_credentials():
     if not PASSWORD or not FRITZBOX_IP:
-        logger.error("No credentials found. Please create a '.env' file with FRITZ_IP, FRITZ_USER and FRITZ_PASS.")
+        logger.error(
+            "No credentials found. Please create a '.env' file with FRITZ_IP, FRITZ_USER and FRITZ_PASS.")
         exit(1)
+
 
 def get_sid():
     session = requests.Session()
@@ -60,6 +63,7 @@ def get_sid():
     except Exception:
         return None, None
 
+
 def get_rules_json(session, sid):
     url = f"{FRITZBOX_URL}/data.lua"
     payload = {"sid": sid, "page": "callRedi", "xhr": "1", "lang": "de"}
@@ -69,6 +73,7 @@ def get_rules_json(session, sid):
         return data.get("data", {}).get("rul_list", [])
     except Exception:
         return []
+
 
 def toggle_rule(session, sid, rule_id, current_state_bool):
     url = f"{FRITZBOX_URL}/data.lua"
@@ -86,6 +91,7 @@ def toggle_rule(session, sid, rule_id, current_state_bool):
     logger.info(f"Changing {rule_id}: {action_text} (Set value to {new_val})...")
     resp = session.post(url, data=payload)
     return resp.status_code == 200
+
 
 @click.command()
 @click.option(
@@ -132,7 +138,8 @@ def main(rule_id, list):
         return
 
     if not rule_id:
-        logger.error("No rule ID specified. Use --rule-id to toggle a rule or --list to show all rules.")
+        logger.error(
+            "No rule ID specified. Use --rule-id to toggle a rule or --list to show all rules.")
         session.get(f"{FRITZBOX_URL}/login_sid.lua?logout=1&sid={sid}")
         return
 
@@ -158,7 +165,8 @@ def main(rule_id, list):
                 if new_state != current_state:
                     logger.info(f"Success! New status: {new_icon}")
                 else:
-                    logger.warning(f"Status unchanged ({new_icon}). Did the box ignore the command?")
+                    logger.warning(
+                        f"Status unchanged ({new_icon}). Did the box ignore the command?")
         else:
             logger.error("Failed to send the command.")
     else:
@@ -166,6 +174,7 @@ def main(rule_id, list):
 
     # Logout
     session.get(f"{FRITZBOX_URL}/login_sid.lua?logout=1&sid={sid}")
+
 
 if __name__ == "__main__":
     main()
