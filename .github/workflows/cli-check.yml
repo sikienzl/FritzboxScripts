@@ -45,7 +45,8 @@ jobs:
       - name: Run unit tests (pytest)
         run: |
           source .venv/bin/activate
-          pytest || true
+          cd $GITHUB_WORKSPACE
+          PYTHONPATH=. pytest
 
       - name: Check CLI help for fritzbox_call_forwarding.py
         run: |
