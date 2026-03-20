@@ -39,6 +39,7 @@ jobs:
       - name: Lint with flake8
         run: |
           source .venv/bin/activate
+          cd $GITHUB_WORKSPACE
           flake8 .
 
       - name: Run unit tests (pytest)
