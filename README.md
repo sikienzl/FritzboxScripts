@@ -1,8 +1,8 @@
-# Fritzbox Call Forwarding CLI
+# FritzboxScripts
 
 [![CLI Check](https://github.com/sikienzl/FritzboxScripts/actions/workflows/cli-check.yml/badge.svg?branch=master)](https://github.com/sikienzl/FritzboxScripts/actions/workflows/cli-check.yml)
 
-A simple Python CLI tool to list and toggle call forwarding rules on your Fritz!Box.
+A collection of python scripts for interacting with a Fritz!Box, especially for features that cannot be accessed via the TR064 protocol. 
 
 ## Features
 
