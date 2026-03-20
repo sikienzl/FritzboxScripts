@@ -29,7 +29,8 @@ logger = logging.getLogger("fritzbox_call_forwarding")
 def check_credentials():
     if not PASSWORD or not FRITZBOX_IP:
         logger.error(
-            "No credentials found. Please create a '.env' file with FRITZ_IP, FRITZ_USER and FRITZ_PASS.")
+            "No credentials found. Please create a '.env' "
+            "file with FRITZ_IP, FRITZ_USER and FRITZ_PASS.")
         exit(1)
 
 
@@ -38,7 +39,7 @@ def get_sid():
     try:
         response = session.get(f"{FRITZBOX_URL}/login_sid.lua")
     except Exception:
-        logger.error(f"Cannot connect to {FRITZ_IP}.")
+        logger.error(f"Cannot connect to {FRITZBOX_IP}.")
         return None, None
 
     root = ET.fromstring(response.text)
@@ -97,7 +98,8 @@ def toggle_rule(session, sid, rule_id, current_state_bool):
 @click.option(
     "--rule-id",
     default=DEFAULT_RULE_ID,
-    help="ID of the call forwarding rule to toggle (default from .env: FRITZ_DEFAULT_RULE_ID)"
+    help="ID of the call forwarding rule to toggle "
+    "(default from .env: FRITZ_DEFAULT_RULE_ID)"
 )
 @click.option(
     "--list",
@@ -139,7 +141,8 @@ def main(rule_id, list):
 
     if not rule_id:
         logger.error(
-            "No rule ID specified. Use --rule-id to toggle a rule or --list to show all rules.")
+            "No rule ID specified. Use --rule-id to toggle"
+            " a rule or --list to show all rules.")
         session.get(f"{FRITZBOX_URL}/login_sid.lua?logout=1&sid={sid}")
         return
 
@@ -166,7 +169,8 @@ def main(rule_id, list):
                     logger.info(f"Success! New status: {new_icon}")
                 else:
                     logger.warning(
-                        f"Status unchanged ({new_icon}). Did the box ignore the command?")
+                        f"Status unchanged ({new_icon}). "
+                        f"Did the box ignore the command?")
         else:
             logger.error("Failed to send the command.")
     else:
